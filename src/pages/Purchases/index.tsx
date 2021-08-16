@@ -53,17 +53,25 @@ export const Purchases = () => {
 		0
 	);
 
+	const amountOfCashbackDenied = purchases.reduce(
+		(accumulator, purchase) =>
+			purchase.status === "Reprovado"
+				? accumulator + purchase.value
+				: accumulator,
+		0
+	);
+
 	useEffect(() => {
+		console.log("oi");
 		api.get("purchases").then((response) => {
 			setPurchases(response.data.purchases);
 		});
 	}, []);
 	return (
 		<Page id="ClientsIndex">
-			<Box w="100%">
+			<Box w="100%" p="8" flex="1">
 				<SimpleGrid
-					minChildWidth="200px"
-					maxWidth="800px"
+					minChildWidth="300px"
 					spacing={["6", "8"]}
 					w="100%"
 					m="20px 0"
@@ -77,6 +85,10 @@ export const Purchases = () => {
 						color="yellow.800"
 					>
 						{formatPrice(amountOfCashbackWaitingValidation)}
+					</Card>
+
+					<Card title="Valor total recusado" bg="red.100" color="red.800">
+						{formatPrice(amountOfCashbackDenied)}
 					</Card>
 				</SimpleGrid>
 

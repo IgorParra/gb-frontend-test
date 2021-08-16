@@ -73,15 +73,15 @@ export const initMirageServer = () => {
 						code: 2,
 						value: 590.51,
 						buyed_at: 1629196693,
-						cashback: 0,
-						status: "Reprovado",
+						cashback: 91.12,
+						status: "Em validação",
 					},
 					{
 						code: 3,
 						value: 10000.9,
 						buyed_at: 1629197293,
 						cashback: 0,
-						status: "Em validação",
+						status: "Reprovado",
 					},
 					{
 						code: 4,
@@ -266,7 +266,30 @@ export const initMirageServer = () => {
 			});
 
 			this.get("purchases");
-			this.post("purchases");
+			this.post("purchases", (schema, request) => {
+				const { value, buyed_at, code } = JSON.parse(request.requestBody);
+
+				if (!value || !buyed_at || !code) {
+					return new Response(401, {}, { errors: ["Dados faltantes"] });
+				}
+				const cashbackPercent = Math.random();
+
+				const cashback = ((value * cashbackPercent) / 100).toFixed(2);
+
+				schema.db.purchases.insert({
+					value,
+					buyed_at,
+					code,
+					cashback,
+					status: "Em validação",
+				});
+
+				return new Response(
+					201,
+					{},
+					{ message: " Compra cadastrada com sucesso!" }
+				);
+			});
 
 			this.namespace = "";
 			this.passthrough();

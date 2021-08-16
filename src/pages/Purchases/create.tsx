@@ -4,7 +4,7 @@ import { Box } from "@chakra-ui/react";
 import Page from "components/Page";
 import { AddNewPurchase } from "./AddNewPurchase";
 
-export function CreateClient() {
+export const CreatePurchase = () => {
 	return (
 		<Page>
 			<Box
@@ -21,4 +21,4 @@ export function CreateClient() {
 			</Box>
 		</Page>
 	);
-}
+};

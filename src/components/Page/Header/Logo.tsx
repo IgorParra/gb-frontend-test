@@ -11,7 +11,7 @@ export function Logo() {
 		>
 			<Link to="/dashboard">
 				<Image
-					style={{ width: "60px" }}
+					style={{ width: "75px" }}
 					src={require("assets/Logo_grupo_boticario_colorida.png").default}
 				/>
 			</Link>

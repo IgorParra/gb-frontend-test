@@ -135,7 +135,7 @@ export const SignUpPage = () => {
 							type="text"
 							bgColor="white"
 							label="Nome"
-							error={errors.email}
+							error={errors.name}
 							isRequired
 							placeholder="Nome completo"
 							icon={<BiUser />}
@@ -148,7 +148,7 @@ export const SignUpPage = () => {
 							bgColor="white"
 							label="CPF"
 							_hover={{ bgColor: "white" }}
-							error={errors.password}
+							error={errors.document}
 							isRequired
 							icon={<BiIdCard />}
 							placeholder="111.111.111-11"
