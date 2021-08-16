@@ -1,6 +1,6 @@
-# Tela de cadastro de um novo revendedor(a) solicitando Nome completo, CPF, e- mail e senha;
+<!-- # Tela de cadastro de um novo revendedor(a) solicitando Nome completo, CPF, e- mail e senha; -->
 
-# Tela de login para informar e-mail e senha;
+<!-- # Tela de login para informar e-mail e senha; -->
 
 # Tela de cadastro de compras onde deverá ser informado o código, valor e data;
 
