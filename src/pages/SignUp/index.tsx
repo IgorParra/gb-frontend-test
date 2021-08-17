@@ -25,7 +25,9 @@ export const SignUpPage = () => {
 
 	const history = useHistory();
 
-	const { handleSubmit, formState, register } = useForm();
+	const { handleSubmit, formState, register } = useForm({
+		resolver: yupResolver(SignUpDataFormSchema),
+	});
 	const [animationState, setAnimationState] = useState({
 		isStopped: false,
 		isPaused: true,
@@ -101,7 +103,7 @@ export const SignUpPage = () => {
 			history.push("/dashboard");
 		}
 		setAnimationState((prevState) => ({ ...prevState, isPaused: false }));
-	}, []);
+	}, [isAuthenticated, history]);
 
 	return (
 		<Flex w="100vw" h="100vh" align="center" justify="center" p={["0", "8"]}>

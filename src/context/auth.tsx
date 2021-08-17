@@ -47,9 +47,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 					signOut();
 				});
 		}
+		//eslint-disable-next-line
 	}, []);
-
-	useEffect(() => {}, []);
 
 	const signIn = async (credentials: SignInCredentials) => {
 		const { email } = credentials;

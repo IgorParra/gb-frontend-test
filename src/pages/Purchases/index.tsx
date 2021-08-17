@@ -1,29 +1,14 @@
-import {
-	Box,
-	Flex,
-	Heading,
-	Button,
-	Icon,
-	Table,
-	Thead,
-	Tr,
-	Checkbox,
-	Th,
-	Tbody,
-	Td,
-	Text,
-	SimpleGrid,
-} from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import Page from 'components/Page'
+import { Box, Button, Flex, Heading, Icon, SimpleGrid, Spinner, Text } from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
+import { RiAddLine } from 'react-icons/ri'
+import { useEffect, useState } from 'react'
+import { formatPrice } from 'util/format'
+import { Card } from 'components/Card'
+import { AiOutlineReload } from 'react-icons/ai'
+import { usePurchases } from 'hooks/usePurchases'
 
-import { RiAddLine, RiPencilLine } from "react-icons/ri";
-import { Pagination } from "components/Pagination";
-
-import Page from "components/Page";
-import { useEffect, useState } from "react";
-import api from "services/api";
-import { formatDate, formatPrice } from "util/format";
-import { Card } from "components/Card";
+import { PurchasesTable } from './PurchasesTable'
 
 interface PurchasesData {
 	code: number;
@@ -31,13 +16,17 @@ interface PurchasesData {
 	buyed_at: number;
 	cashback: number;
 	status: "Em validação" | "Reprovado" | "Aprovado";
+	percentCashback: string;
 }
+
 export const Purchases = () => {
+	const [page, setPage] = useState(1);
+
+	const { data, isLoading, error, isFetching, refetch } = usePurchases(page);
+
 	const [purchases, setPurchases] = useState<PurchasesData[]>(
 		[] as PurchasesData[]
 	);
-
-	const [page, setPage] = useState(1);
 
 	const amountOfCashback = purchases.reduce(
 		(accumulator, purchase) =>
@@ -63,12 +52,7 @@ export const Purchases = () => {
 		0
 	);
 
-	useEffect(() => {
-		api.get("purchases").then((response) => {
-			console.log(response);
-			setPurchases(response.data);
-		});
-	}, []);
+	useEffect(() => {}, []);
 	return (
 		<Page id="ClientsIndex">
 			<Box w="100%" p="8" flex="1">
@@ -115,9 +99,34 @@ export const Purchases = () => {
 					}}
 				>
 					<Flex mb="8" justify="space-between" align="center">
-						<Heading size="lg" fontWeight="bold">
-							Compras
+						<Heading
+							size="lg"
+							fontWeight="bold"
+							display="flex"
+							align="center"
+							justify="center"
+						>
+							Compras{" "}
+							{isFetching && !isLoading && (
+								<>
+									<Spinner
+										size="sm"
+										color="gray.500"
+										ml="4"
+										alignSelf="center"
+									/>
+									<Text
+										fontSize="sm"
+										color="gray.500"
+										ml="4"
+										alignSelf="center"
+									>
+										Atualizando dados ...
+									</Text>
+								</>
+							)}
 						</Heading>
+
 						<Link to="/compras/cadastro">
 							<Button
 								as="a"
@@ -129,113 +138,29 @@ export const Purchases = () => {
 							</Button>
 						</Link>
 					</Flex>
-					<Table colorScheme="whiteAlpha">
-						<Thead>
-							<Tr>
-								<Th px="6" color="gray.300" width="3">
-									CÓD.
-								</Th>
-								<Th px="6" color="gray.300" width="8">
-									VALOR
-								</Th>
-
-								<Th px="6" color="gray.300" width="8">
-									DATA DA COMPRA
-								</Th>
-								<Th px="6" color="gray.300" width="8">
-									CASHBACK | %
-								</Th>
-
-								<Th px="6" color="gray.300" width="8">
-									STATUS
-								</Th>
-
-								<Th color="gray.300" width="20px"></Th>
-							</Tr>
-						</Thead>
-						<Tbody>
-							{purchases.map((purchase) => {
-								return (
-									<Tr key={purchase.code}>
-										<Td px="6">
-											<Box width="20">
-												<Text fontWeight="bold"> {purchase.code}</Text>
-											</Box>
-										</Td>
-
-										<Td px="6">
-											<Box>
-												<Text fontWeight="bold">
-													{formatPrice(purchase.value)}
-												</Text>
-											</Box>
-										</Td>
-
-										<Td px="6">
-											<Box>
-												<Text fontWeight="bold">
-													{formatDate(purchase.buyed_at)}
-												</Text>
-											</Box>
-										</Td>
-										<Td px="6">
-											<Box>
-												<Text fontWeight="bold">
-													{formatPrice(purchase.cashback)}
-												</Text>
-												<Text
-													fontWeight="sm"
-													color="gray.300"
-													fontSize="sm"
-													pt="2"
-												>
-													{((purchase.cashback * 100) / purchase.value).toFixed(
-														2
-													)}
-													%
-												</Text>
-											</Box>
-										</Td>
-
-										<Td px="6">
-											<Box>
-												<Text
-													fontWeight="bold"
-													color={
-														purchase.status === "Aprovado"
-															? "green.300"
-															: purchase.status === "Em validação"
-															? "yellow.200"
-															: "red.400"
-													}
-												>
-													{" "}
-													{purchase.status}
-												</Text>
-											</Box>
-										</Td>
-
-										<Th color="gray.300" width="2" cursor="pointer">
-											<Button
-												as="a"
-												fontSize="sm"
-												colorScheme="blue"
-												width="20px"
-												onClick={() => alert("Funcionalidade indisponível ")}
-											>
-												<Icon as={RiPencilLine} />
-											</Button>
-										</Th>
-									</Tr>
-								);
-							})}
-						</Tbody>
-					</Table>
-					<Pagination
-						totalCountOfRegisters={200}
-						currentPage={page}
-						onPageChange={setPage}
-					/>
+					<Box
+						size="md"
+						m=" 10px 0"
+						onClick={() => refetch()}
+						cursor="pointer"
+						_hover={{ color: "orange" }}
+					>
+						<AiOutlineReload />
+					</Box>
+					{isLoading ? (
+						<Flex justify="center">
+							<Spinner />
+						</Flex>
+					) : error ? (
+						<Flex justify="center">Falha ao obter a lista de compras</Flex>
+					) : (
+						<PurchasesTable
+							purchases={data?.purchases}
+							page={page}
+							totalCountOfRegisters={data?.totalCount}
+							setPage={setPage}
+						/>
+					)}
 				</Box>
 			</Box>
 		</Page>

@@ -6,7 +6,6 @@ import {
 } from "@chakra-ui/react";
 import { ActiveLink } from "components/ActiveLink";
 import { ElementType } from "react";
-import { Link } from "react-router-dom";
 
 interface NavLinksProps extends ChakraLinkProps {
 	title: string;

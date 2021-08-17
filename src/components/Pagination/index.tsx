@@ -1,8 +1,9 @@
-import { Box, Stack, Text } from "@chakra-ui/react";
-import { PaginationButton } from "./PaginationButton";
+import { Box, Stack, Text } from '@chakra-ui/react'
+
+import { PaginationButton } from './PaginationButton'
 
 interface PaginationProps {
-	totalCountOfRegisters: number;
+	totalCountOfRegisters: number | undefined;
 	registerPerPage?: number;
 	currentPage?: number;
 	onPageChange: (page: number) => void;
@@ -19,7 +20,7 @@ const generatePagesArray = (from: number, to: number) => {
 };
 
 export const Pagination = ({
-	totalCountOfRegisters,
+	totalCountOfRegisters = 0,
 	registerPerPage = 10,
 	currentPage = 10,
 	onPageChange,

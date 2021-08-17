@@ -1,12 +1,9 @@
-import { createServer, Factory, Model, Response } from "miragejs";
-import faker from "faker";
-import jwt from "jsonwebtoken";
-import decode from "jwt-decode";
-
-import { v4 as uuid } from "uuid";
-
-import { generate } from "gerador-validador-cpf";
-import { CgNpm } from "react-icons/cg";
+import faker from 'faker'
+import jwt from 'jsonwebtoken'
+import decode from 'jwt-decode'
+import { createServer, Factory, Model, Response } from 'miragejs'
+import { v4 as uuid } from 'uuid'
+import { generate } from 'gerador-validador-cpf'
 
 interface UserProps {
 	name: string;
@@ -65,35 +62,35 @@ export const initMirageServer = () => {
 					{
 						code: 1,
 						value: 1890.51,
-						buyed_at: 1629095893,
+						buyed_at: 1628573486 * 1000,
 						cashback: 63.57,
 						status: "Aprovado",
 					},
 					{
 						code: 2,
 						value: 590.51,
-						buyed_at: 1629196693,
+						buyed_at: 1628141486 * 1000,
 						cashback: 91.12,
 						status: "Em validação",
 					},
 					{
 						code: 3,
 						value: 10000.9,
-						buyed_at: 1629197293,
+						buyed_at: 1627795886 * 1000,
 						cashback: 0,
 						status: "Reprovado",
 					},
 					{
 						code: 4,
 						value: 2690.51,
-						buyed_at: 1629283693,
+						buyed_at: 1622525486 * 1000,
 						cashback: 870.57,
 						status: "Aprovado",
 					},
 					{
 						code: 5,
 						value: 325.3,
-						buyed_at: 1629308893,
+						buyed_at: 1624599086 * 1000,
 						cashback: 12.57,
 						status: "Aprovado",
 					},
@@ -285,7 +282,7 @@ export const initMirageServer = () => {
 				const cashbackPercent = Math.random();
 
 				const cashback = ((value * cashbackPercent) / 100).toFixed(2);
-
+				console.log(buyed_at);
 				schema.db.purchases.insert({
 					value,
 					buyed_at,
@@ -302,6 +299,7 @@ export const initMirageServer = () => {
 			});
 
 			this.namespace = "";
+			this.timing = 2500;
 			this.passthrough();
 		},
 	});

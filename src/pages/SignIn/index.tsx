@@ -1,9 +1,9 @@
-import { Box, Button, Flex, Stack, Text } from "@chakra-ui/react";
+import { Button, Flex, Stack, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Lottie from "react-lottie";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
 
 import { Input } from "components/FormComponents/Input";
@@ -11,18 +11,16 @@ import { Input } from "components/FormComponents/Input";
 import { HiOutlineMail } from "react-icons/hi";
 import { BiLockAlt } from "react-icons/bi";
 import animationData from "assets/logo-animation.json";
-import api from "services/api";
-import { toast } from "react-toastify";
 import { useAuth } from "hooks/useAuth";
 
-type UserDataFormSchemaData = {
-	email: string;
-	password: string;
-};
+// type UserDataFormSchemaData = {
+// 	email: string;
+// 	password: string;
+// };
 
 export const SignInPage = () => {
 	const history = useHistory();
-	const { signIn, isAuthenticated, user } = useAuth();
+	const { signIn, isAuthenticated } = useAuth();
 	const SignInDataFormSchema = yup.object().shape({
 		email: yup.string().required("Nome é um campo obrigatório"),
 		password: yup.string().required("Senha é um campo obrigatório"),
@@ -64,7 +62,7 @@ export const SignInPage = () => {
 			history.push("/dashboard");
 		}
 		setAnimationState((prevState) => ({ ...prevState, isPaused: false }));
-	}, [isAuthenticated]);
+	}, [isAuthenticated, history]);
 
 	return (
 		<Flex w="100vw" h="100vh" align="center" justify="center" p={["0", "8"]}>

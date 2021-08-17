@@ -1,4 +1,4 @@
-import { Box, Text, Image } from "@chakra-ui/react";
+import { Box, Image } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 export function Logo() {
 	return (

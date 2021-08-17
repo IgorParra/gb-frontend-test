@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Box } from "@chakra-ui/react";
 
 import Page from "components/Page";

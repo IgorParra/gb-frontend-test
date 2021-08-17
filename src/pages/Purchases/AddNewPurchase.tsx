@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { Link, useHistory } from "react-router-dom";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
 	Box,
 	Button,
@@ -9,7 +9,6 @@ import {
 	Heading,
 	HStack,
 	SimpleGrid,
-	Stack,
 	VStack,
 } from "@chakra-ui/react";
 import * as yup from "yup";
@@ -20,13 +19,13 @@ import { Input } from "components/FormComponents/Input";
 import api from "services/api";
 import { useState } from "react";
 
-type AddNewPruchaseFormData = {
-	code: number;
-	value: number;
-	buyed_at: number;
-	cashback: number;
-	status: "Em validação" | "Reprovado" | "Aprovado";
-};
+// type AddNewPruchaseFormData = {
+// 	code: number;
+// 	value: number;
+// 	buyed_at: number;
+// 	cashback: number;
+// 	status: "Em validação" | "Reprovado" | "Aprovado";
+// };
 
 const addNewPurchaseFormSchema = yup.object().shape({
 	code: yup.number().required("Código é um campo necessario"),
