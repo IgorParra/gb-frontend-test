@@ -1,7 +1,7 @@
 import faker from 'faker'
 import jwt from 'jsonwebtoken'
 import decode from 'jwt-decode'
-import { createServer, Factory, Model, Response } from 'miragejs'
+import { ActiveModelSerializer, createServer, Factory, Model, Response } from 'miragejs'
 import { v4 as uuid } from 'uuid'
 import { generate } from 'gerador-validador-cpf'
 
@@ -33,6 +33,10 @@ export const initMirageServer = () => {
 		models: {
 			users: Model.extend<Partial<UserProps>>({}),
 			purchases: Model.extend<Partial<PurchasesRouteProps>>({}),
+		},
+
+		serializers: {
+			application: ActiveModelSerializer,
 		},
 
 		factories: {

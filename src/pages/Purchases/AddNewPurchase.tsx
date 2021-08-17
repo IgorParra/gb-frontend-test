@@ -1,23 +1,14 @@
-import { toast } from "react-toastify";
-import { Link, useHistory } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import {
-	Box,
-	Button,
-	Divider,
-	Flex,
-	Heading,
-	HStack,
-	SimpleGrid,
-	VStack,
-} from "@chakra-ui/react";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-
-import { Input } from "components/FormComponents/Input";
-
-import api from "services/api";
-import { useState } from "react";
+import * as yup from 'yup'
+import api from 'services/api'
+import { toast } from 'react-toastify'
+import { Link, useHistory } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { Box, Button, Divider, Flex, Heading, HStack, SimpleGrid, VStack } from '@chakra-ui/react'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { Input } from 'components/FormComponents/Input'
+import { useMutation } from 'react-query'
+import { useState } from 'react'
+import { queryClient } from 'services/queryClient'
 
 // type AddNewPruchaseFormData = {
 // 	code: number;
@@ -34,6 +25,24 @@ const addNewPurchaseFormSchema = yup.object().shape({
 });
 
 export const AddNewPurchase = () => {
+	const addPurchase = useMutation(
+		async (data: any) => {
+			const date = new Date(data.buyed_at);
+			const timestamp = date.getTime();
+
+			const response = await api.post("purchases", {
+				...data,
+				buyed_at: timestamp,
+			});
+
+			return response.data;
+		},
+		{
+			onSuccess: () => {
+				queryClient.invalidateQueries("purchases");
+			},
+		}
+	);
 	const history = useHistory();
 	const { register, handleSubmit, formState } = useForm({
 		resolver: yupResolver(addNewPurchaseFormSchema),
@@ -43,23 +52,18 @@ export const AddNewPurchase = () => {
 	const onSubmit = async (data: any) => {
 		setIsLoading(true);
 		try {
-			const date = new Date(data.buyed_at);
-			const timestamp = date.getTime();
-
-			await api
-				.post("purchases", { ...data, buyed_at: timestamp })
-				.then((response) => {
-					history.push(`/compras`);
-					toast.success("Compra cadastrada!", {
-						position: "top-right",
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+			await addPurchase.mutateAsync(data).then(() => {
+				history.push(`/compras`);
+				toast.success("Compra cadastrada!", {
+					position: "top-right",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
 				});
+			});
 		} catch (e) {
 			toast.error(`Erro ao adicionar cliente:${e.response.data[0]}`, {
 				position: "top-right",
