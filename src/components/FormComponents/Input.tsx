@@ -5,20 +5,12 @@ import {
 	Input as ChakraInput,
 	InputGroup,
 	InputLeftElement,
-	InputProps as ChakraInputProps,
 	InputRightElement,
 	Box,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { FieldError } from "react-hook-form";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-
-interface InputProps extends ChakraInputProps {
-	name: string;
-	label?: string;
-	error?: FieldError;
-	icon?: String | JSX.Element;
-}
+import { InputProps } from "types";
 
 export const Input = ({
 	name,

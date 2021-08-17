@@ -12,11 +12,7 @@ import {
 import { useEffect } from "react";
 import { useAuth } from "hooks/useAuth";
 import { useHistory } from "react-router-dom";
-
-interface PageProps {
-	children: JSX.Element;
-	id?: string;
-}
+import { PageProps } from "types";
 
 function Page({ children, id }: PageProps) {
 	const { isAuthenticated } = useAuth();

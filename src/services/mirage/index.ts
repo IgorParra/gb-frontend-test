@@ -1,32 +1,23 @@
-import faker from 'faker'
-import jwt from 'jsonwebtoken'
-import decode from 'jwt-decode'
-import { ActiveModelSerializer, createServer, Factory, Model, Response } from 'miragejs'
-import { v4 as uuid } from 'uuid'
-import { generate } from 'gerador-validador-cpf'
-
-interface UserProps {
-	name: string;
-	document: number;
-	email: string;
-	password: string;
-	created_at: string;
-}
-
-interface PurchasesRouteProps {
-	code: number;
-	value: number;
-	buyed_at: number;
-	cashback: number;
-	status: "Em validação" | "Reprovado" | "Aprovado";
-}
-type RefreshTokensStore = Map<string, string[]>;
+import faker from "faker";
+import jwt from "jsonwebtoken";
+import decode from "jwt-decode";
+import {
+	ActiveModelSerializer,
+	createServer,
+	Factory,
+	Model,
+	Response,
+} from "miragejs";
+import { v4 as uuid } from "uuid";
+import { generate } from "gerador-validador-cpf";
+import {
+	DecodedToken,
+	PurchasesRouteProps,
+	RefreshTokensStore,
+	UserProps,
+} from "types";
 
 export const tokens: RefreshTokensStore = new Map();
-
-export type DecodedToken = {
-	sub: string;
-};
 
 export const initMirageServer = () => {
 	const server = createServer({

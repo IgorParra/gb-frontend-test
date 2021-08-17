@@ -1,13 +1,7 @@
-import { Box, Stack, Text } from '@chakra-ui/react'
+import { Box, Stack, Text } from "@chakra-ui/react";
+import { PaginationProps } from "types";
 
-import { PaginationButton } from './PaginationButton'
-
-interface PaginationProps {
-	totalCountOfRegisters: number | undefined;
-	registerPerPage?: number;
-	currentPage?: number;
-	onPageChange: (page: number) => void;
-}
+import { PaginationButton } from "./PaginationButton";
 
 const siblingsCount = 1;
 

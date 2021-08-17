@@ -1,23 +1,18 @@
-import { Box, Button, Icon, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react'
-import { formatDate, formatPrice } from 'util/format'
-import { RiPencilLine } from 'react-icons/ri'
-import { Pagination } from 'components/Pagination'
-
-interface PurchasesData {
-	code: number;
-	value: number;
-	buyed_at: number;
-	cashback: number;
-	status: "Em validação" | "Reprovado" | "Aprovado";
-	percentCashback: string;
-}
-
-interface PurchasesTableProps {
-	purchases: PurchasesData[] | undefined;
-	page: number;
-	setPage(page: number): void;
-	totalCountOfRegisters?: number | undefined;
-}
+import {
+	Box,
+	Button,
+	Icon,
+	Table,
+	Tbody,
+	Td,
+	Text,
+	Th,
+	Thead,
+	Tr,
+} from "@chakra-ui/react";
+import { RiPencilLine } from "react-icons/ri";
+import { Pagination } from "components/Pagination";
+import { PurchasesTableProps } from "types";
 
 export const PurchasesTable = ({
 	purchases,

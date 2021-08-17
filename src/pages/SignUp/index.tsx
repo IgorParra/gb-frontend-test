@@ -28,10 +28,12 @@ export const SignUpPage = () => {
 	const { handleSubmit, formState, register } = useForm({
 		resolver: yupResolver(SignUpDataFormSchema),
 	});
+
 	const [animationState, setAnimationState] = useState({
 		isStopped: false,
 		isPaused: true,
 	});
+
 	const [isLoading, setIsLoading] = useState(false);
 
 	const { errors } = formState;

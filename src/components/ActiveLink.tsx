@@ -1,11 +1,6 @@
 import { useRouter } from "hooks/useRouter";
-import { ReactNode } from "react";
-import { Link, LinkProps } from "react-router-dom";
-
-interface ActiveLinkProps extends LinkProps {
-	children: ReactNode;
-	shoulMatchExactHref?: boolean;
-}
+import { Link } from "react-router-dom";
+import { ActiveLinkProps } from "types";
 
 export function ActiveLink({
 	children,

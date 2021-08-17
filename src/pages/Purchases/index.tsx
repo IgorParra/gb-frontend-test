@@ -1,23 +1,24 @@
-import Page from 'components/Page'
-import { Box, Button, Flex, Heading, Icon, SimpleGrid, Spinner, Text } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
-import { RiAddLine } from 'react-icons/ri'
-import { useEffect, useState } from 'react'
-import { formatPrice } from 'util/format'
-import { Card } from 'components/Card'
-import { AiOutlineReload } from 'react-icons/ai'
-import { usePurchases } from 'hooks/usePurchases'
+import Page from "components/Page";
+import {
+	Box,
+	Button,
+	Flex,
+	Heading,
+	Icon,
+	SimpleGrid,
+	Spinner,
+	Text,
+} from "@chakra-ui/react";
+import { Link } from "react-router-dom";
+import { RiAddLine } from "react-icons/ri";
+import { useEffect, useState } from "react";
+import { formatPrice } from "util/format";
+import { Card } from "components/Card";
+import { AiOutlineReload } from "react-icons/ai";
+import { usePurchases } from "hooks/usePurchases";
 
-import { PurchasesTable } from './PurchasesTable'
-
-interface PurchasesData {
-	code: number;
-	value: number;
-	buyed_at: number;
-	cashback: number;
-	status: "Em validação" | "Reprovado" | "Aprovado";
-	percentCashback: string;
-}
+import { PurchasesTable } from "./PurchasesTable";
+import { PurchasesData } from "types";
 
 export const Purchases = () => {
 	const [page, setPage] = useState(1);

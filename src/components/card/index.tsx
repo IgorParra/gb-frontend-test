@@ -1,10 +1,6 @@
 import { Flex, Text, FlexProps } from "@chakra-ui/react";
 import { ReactNode } from "react";
-
-interface CardProps extends FlexProps {
-	title: string;
-	children: ReactNode;
-}
+import { CardProps } from "types";
 
 export const Card = ({ title, children, ...rest }: CardProps) => {
 	return (

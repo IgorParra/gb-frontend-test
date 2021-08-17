@@ -1,22 +1,23 @@
-import * as yup from 'yup'
-import api from 'services/api'
-import { toast } from 'react-toastify'
-import { Link, useHistory } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
-import { Box, Button, Divider, Flex, Heading, HStack, SimpleGrid, VStack } from '@chakra-ui/react'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { Input } from 'components/FormComponents/Input'
-import { useMutation } from 'react-query'
-import { useState } from 'react'
-import { queryClient } from 'services/queryClient'
-
-// type AddNewPruchaseFormData = {
-// 	code: number;
-// 	value: number;
-// 	buyed_at: number;
-// 	cashback: number;
-// 	status: "Em validação" | "Reprovado" | "Aprovado";
-// };
+import * as yup from "yup";
+import api from "services/api";
+import { toast } from "react-toastify";
+import { Link, useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import {
+	Box,
+	Button,
+	Divider,
+	Flex,
+	Heading,
+	HStack,
+	SimpleGrid,
+	VStack,
+} from "@chakra-ui/react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Input } from "components/FormComponents/Input";
+import { useMutation } from "react-query";
+import { useState } from "react";
+import { queryClient } from "services/queryClient";
 
 const addNewPurchaseFormSchema = yup.object().shape({
 	code: yup.number().required("Código é um campo necessario"),

@@ -1,20 +1,7 @@
-import api from 'services/api'
-import { useQuery } from 'react-query'
-import { formatDate, formatPrice } from 'util/format'
-
-interface PurchasesData {
-	code: number;
-	value: number;
-	buyed_at: number;
-	cashback: number;
-	status: "Em validação" | "Reprovado" | "Aprovado";
-	percentCashback: string;
-}
-
-type GetUserReponse = {
-	totalCount: number;
-	purchases: PurchasesData[];
-};
+import api from "services/api";
+import { useQuery } from "react-query";
+import { formatDate, formatPrice } from "util/format";
+import { GetUserReponse, PurchasesData } from "types";
 
 export async function getPurchases(page: number): Promise<GetUserReponse> {
 	const { data, headers } = await api.get("purchases", { params: { page } });

@@ -1,19 +1,7 @@
 import { Stack } from "@chakra-ui/react";
-import React, { ElementType } from "react";
+import { SidebarNavProps } from "types";
 import { NavLink } from "./NavLink";
 import NavSection from "./NavSection";
-
-interface group {
-	title: string;
-	subgroups: {
-		title: string;
-		icon: ElementType;
-		page?: string;
-	}[];
-}
-interface SidebarNavProps {
-	groups: group[];
-}
 
 export function SidebarNav({ groups }: SidebarNavProps) {
 	const renderGroups = groups.map((group, key) => {

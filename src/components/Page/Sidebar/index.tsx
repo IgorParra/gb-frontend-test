@@ -15,18 +15,7 @@ import { SidebarNav } from "./SidebarNav";
 
 import { CgLogOut } from "react-icons/cg";
 import { useAuth } from "hooks/useAuth";
-
-interface group {
-	title: string;
-	subgroups: {
-		title: string;
-		icon: ElementType;
-	}[];
-}
-
-interface SidebarProps {
-	groups: group[];
-}
+import { SidebarProps } from "types";
 
 export function Sidebar({ groups }: SidebarProps) {
 	const { signOut } = useAuth();

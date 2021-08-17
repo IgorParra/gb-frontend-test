@@ -13,11 +13,6 @@ import { BiLockAlt } from "react-icons/bi";
 import animationData from "assets/logo-animation.json";
 import { useAuth } from "hooks/useAuth";
 
-// type UserDataFormSchemaData = {
-// 	email: string;
-// 	password: string;
-// };
-
 export const SignInPage = () => {
 	const history = useHistory();
 	const { signIn, isAuthenticated } = useAuth();
