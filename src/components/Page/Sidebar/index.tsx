@@ -7,13 +7,10 @@ import {
 	DrawerContent,
 	DrawerHeader,
 	DrawerOverlay,
-	Stack,
 	useBreakpointValue,
 } from "@chakra-ui/react";
 import { useSidbarDrawer } from "context/SidebarDrawerContex";
 import { ElementType } from "react";
-import { NavLink } from "./NavLink";
-import NavSection from "./NavSection";
 import { SidebarNav } from "./SidebarNav";
 
 import { CgLogOut } from "react-icons/cg";
@@ -43,17 +40,17 @@ export function Sidebar({ groups }: SidebarProps) {
 		return (
 			<Drawer isOpen={isOpen} placement="left" onClose={onClose}>
 				<DrawerOverlay>
-					<DrawerContent bg="gray.800" p="4">
+					<DrawerContent h="100%" bg="gray.800" p="4">
 						<DrawerCloseButton mt="¨6" />
 						<DrawerHeader>Menu</DrawerHeader>
-						<DrawerBody>
+						<DrawerBody display="flex" flexDirection="column">
 							<SidebarNav groups={groups} />
 							<Button
 								leftIcon={<CgLogOut />}
 								colorScheme="pink"
 								variant="solid"
 								w="100%"
-								mt={5}
+								mt={"auto"}
 								onClick={signOut}
 							>
 								Sair
@@ -65,7 +62,14 @@ export function Sidebar({ groups }: SidebarProps) {
 		);
 	}
 	return (
-		<Box as="aside" w="55" mr="8">
+		<Box
+			as="aside"
+			w="55"
+			mr="8"
+			display="flex"
+			height="100%"
+			flexDirection="column"
+		>
 			<SidebarNav groups={groups} />
 			<Button
 				leftIcon={<CgLogOut />}

@@ -18,6 +18,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Input } from "components/FormComponents/Input";
 
 import api from "services/api";
+import { useState } from "react";
 
 type AddNewPruchaseFormData = {
 	code: number;
@@ -38,7 +39,10 @@ export const AddNewPurchase = () => {
 	const { register, handleSubmit, formState } = useForm({
 		resolver: yupResolver(addNewPurchaseFormSchema),
 	});
+
+	const [isLoading, setIsLoading] = useState(false);
 	const onSubmit = async (data: any) => {
+		setIsLoading(true);
 		try {
 			const date = new Date(data.buyed_at);
 			const timestamp = date.getTime();
@@ -68,6 +72,7 @@ export const AddNewPurchase = () => {
 				progress: undefined,
 			});
 		}
+		setIsLoading(false);
 	};
 
 	const { errors } = formState;
@@ -117,11 +122,7 @@ export const AddNewPurchase = () => {
 					<Link to="/compras">
 						<Button colorScheme="whiteAlpha">Cancelar</Button>
 					</Link>
-					<Button
-						colorScheme="orange"
-						type="submit"
-						isLoading={formState.isSubmitting}
-					>
+					<Button colorScheme="orange" type="submit" isLoading={isLoading}>
 						Cadastrar
 					</Button>
 				</HStack>

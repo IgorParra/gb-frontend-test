@@ -52,6 +52,13 @@ export const SignInPage = () => {
 		},
 	};
 
+	const HandleSignIn = async (data: any) => {
+		setIsLoading(true);
+		signIn(data).then(() => {
+			setIsLoading(false);
+		});
+	};
+
 	useEffect(() => {
 		if (isAuthenticated) {
 			history.push("/dashboard");
@@ -74,7 +81,7 @@ export const SignInPage = () => {
 				transition={"height ease 0.5s"}
 				overflow="hidden"
 				position="relative"
-				onSubmit={handleSubmit(signIn)}
+				onSubmit={handleSubmit(HandleSignIn)}
 			>
 				<Lottie
 					key={"gb-logo"}

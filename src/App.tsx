@@ -5,7 +5,6 @@ import { initMirageServer } from "./services/mirage";
 import { theme } from "./styles/theme";
 
 import "react-toastify/dist/ReactToastify.css";
-import { AuthProvider } from "context/auth";
 import { SidebarDrawerProvider } from "context/SidebarDrawerContex";
 
 if (process.env.NODE_ENV === "development") {

@@ -23,7 +23,7 @@ import Page from "components/Page";
 import { useEffect, useState } from "react";
 import api from "services/api";
 import { formatDate, formatPrice } from "util/format";
-import { Card } from "components/card";
+import { Card } from "components/Card";
 
 interface PurchasesData {
 	code: number;
@@ -36,6 +36,8 @@ export const Purchases = () => {
 	const [purchases, setPurchases] = useState<PurchasesData[]>(
 		[] as PurchasesData[]
 	);
+
+	const [page, setPage] = useState(1);
 
 	const amountOfCashback = purchases.reduce(
 		(accumulator, purchase) =>
@@ -62,9 +64,9 @@ export const Purchases = () => {
 	);
 
 	useEffect(() => {
-		console.log("oi");
 		api.get("purchases").then((response) => {
-			setPurchases(response.data.purchases);
+			console.log(response);
+			setPurchases(response.data);
 		});
 	}, []);
 	return (
@@ -76,18 +78,18 @@ export const Purchases = () => {
 					w="100%"
 					m="20px 0"
 				>
-					<Card title="Total cashback" bg="green.100" color="green.800">
+					<Card title="Total cashback" bg="green.700" color="green.100">
 						{formatPrice(amountOfCashback)}
 					</Card>
 					<Card
 						title="Valor total aguardando validação"
-						bg="yellow.100"
-						color="yellow.800"
+						bg="yellow.500"
+						color="yellow.100"
 					>
 						{formatPrice(amountOfCashbackWaitingValidation)}
 					</Card>
 
-					<Card title="Valor total recusado" bg="red.100" color="red.800">
+					<Card title="Valor total recusado" bg="red.700" color="red.100">
 						{formatPrice(amountOfCashbackDenied)}
 					</Card>
 				</SimpleGrid>
@@ -229,7 +231,11 @@ export const Purchases = () => {
 							})}
 						</Tbody>
 					</Table>
-					<Pagination />
+					<Pagination
+						totalCountOfRegisters={200}
+						currentPage={page}
+						onPageChange={setPage}
+					/>
 				</Box>
 			</Box>
 		</Page>

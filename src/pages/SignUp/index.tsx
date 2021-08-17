@@ -12,6 +12,7 @@ import animationData from "assets/logo-animation.json";
 import api from "services/api";
 import { toast } from "react-toastify";
 import { useAuth } from "hooks/useAuth";
+import { validate } from "gerador-validador-cpf";
 
 export const SignUpPage = () => {
 	const { isAuthenticated } = useAuth();
@@ -24,15 +25,12 @@ export const SignUpPage = () => {
 
 	const history = useHistory();
 
-	const { handleSubmit, formState, register } = useForm({
-		resolver: yupResolver(SignUpDataFormSchema),
-	});
+	const { handleSubmit, formState, register } = useForm();
 	const [animationState, setAnimationState] = useState({
 		isStopped: false,
 		isPaused: true,
 	});
-	const [activeMenu, setActiveMenu] = useState("signin");
-	const [menuHeight, setMenuHeight] = useState("auto");
+	const [isLoading, setIsLoading] = useState(false);
 
 	const { errors } = formState;
 
@@ -45,6 +43,7 @@ export const SignUpPage = () => {
 	};
 
 	const HandleSignUp = async (data: any) => {
+		setIsLoading(true);
 		try {
 			await api.post("users", data).then((response) => {
 				const {
@@ -94,6 +93,7 @@ export const SignUpPage = () => {
 				}
 			);
 		}
+		setIsLoading(false);
 	};
 
 	useEffect(() => {
@@ -145,15 +145,20 @@ export const SignUpPage = () => {
 						<Input
 							color="gray.900"
 							type="number"
+							maxLength={14}
 							bgColor="white"
-							label="CPF"
+							label="CPF - Apenas números"
 							_hover={{ bgColor: "white" }}
 							error={errors.document}
 							isRequired
 							icon={<BiIdCard />}
-							placeholder="111.111.111-11"
+							placeholder="12345678900"
 							_focus={{ bgColor: "white", borderColor: "orange" }}
-							{...register("document")}
+							{...register("document", {
+								required: true,
+								maxLength: { value: 14, message: "CPF deve conter 11 dígitos" },
+								validate: (value) => validate(value) || "CPF inválido!",
+							})}
 						/>
 						<Input
 							color="gray.900"
@@ -189,7 +194,13 @@ export const SignUpPage = () => {
 								</Link>
 							</Text>
 						</Stack>
-						<Button type="submit" mt="6" colorScheme="orange" size="lg">
+						<Button
+							type="submit"
+							mt="6"
+							colorScheme="orange"
+							size="lg"
+							isLoading={isLoading}
+						>
 							Criar conta
 						</Button>
 					</Stack>

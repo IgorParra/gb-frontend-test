@@ -55,7 +55,7 @@ function Page({ children, id }: PageProps) {
 		if (!isAuthenticated) {
 			history.push("/");
 		}
-	}, [isAuthenticated]);
+	}, [isAuthenticated, history]);
 
 	return (
 		<Box id={id}>

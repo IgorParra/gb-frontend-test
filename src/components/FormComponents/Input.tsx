@@ -46,6 +46,7 @@ export const Input = ({
 					/>
 				)}
 				<ChakraInput
+					data-testid={`input-${name}`}
 					name={name}
 					id={name}
 					type={type === "password" ? (show ? "text" : "password") : type}
@@ -75,7 +76,11 @@ export const Input = ({
 					</InputRightElement>
 				)}
 			</InputGroup>
-			{!!error && <FormErrorMessage>{error.message}</FormErrorMessage>}
+			{!!error && (
+				<FormErrorMessage data-testid={`input-error-${name}`}>
+					{error.message}
+				</FormErrorMessage>
+			)}
 		</FormControl>
 	);
 };

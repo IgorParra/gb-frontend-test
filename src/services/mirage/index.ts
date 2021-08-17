@@ -1,4 +1,4 @@
-import { createServer, Factory, Model, Response, Collection } from "miragejs";
+import { createServer, Factory, Model, Response } from "miragejs";
 import faker from "faker";
 import jwt from "jsonwebtoken";
 import decode from "jwt-decode";
@@ -6,8 +6,8 @@ import decode from "jwt-decode";
 import { v4 as uuid } from "uuid";
 
 import { generate } from "gerador-validador-cpf";
+import { CgNpm } from "react-icons/cg";
 
-import md5 from "crypto-js/md5";
 interface UserProps {
 	name: string;
 	document: number;
@@ -61,7 +61,7 @@ export const initMirageServer = () => {
 		seeds(server) {
 			server.createList("user", 10);
 			server.db.loadData({
-				purchases: <PurchasesRouteProps[]>[
+				purchases: [
 					{
 						code: 1,
 						value: 1890.51,
@@ -97,7 +97,7 @@ export const initMirageServer = () => {
 						cashback: 12.57,
 						status: "Aprovado",
 					},
-				],
+				] as PurchasesRouteProps[],
 			});
 		},
 
@@ -112,19 +112,15 @@ export const initMirageServer = () => {
 				"users",
 				(schema, request) => {
 					const newAccountData = JSON.parse(request.requestBody);
-					const { email, document } = newAccountData;
+					const { email, document, password, name } = newAccountData;
 
 					const userAlreadyExist = schema.db.users.where(
 						(user: UserProps) =>
 							user.email === email || user.document === document
 					)[0];
 
-					if (!!userAlreadyExist) {
-						return new Response(
-							400,
-							{},
-							{ errors: ["E-mail ou CPF já cadastrados!"] }
-						);
+					if (!!userAlreadyExist || !email || !document || !password || !name) {
+						return new Response(400, {}, { errors: ["Há dados faltando"] });
 					}
 
 					// Aqui, o a senha deveria ser criptografada, e na hora do login,
@@ -189,6 +185,7 @@ export const initMirageServer = () => {
 				if (!user) {
 					return new Response(401, {}, { errors: ["Usuário não encontrato"] });
 				}
+
 				return new Response(
 					200,
 					{},
@@ -265,7 +262,20 @@ export const initMirageServer = () => {
 				};
 			});
 
-			this.get("purchases");
+			this.get("purchases", (schema, request) => {
+				const { page = 1, per_page = 10 } = request.queryParams;
+
+				const total = schema.all("purchases").length;
+
+				const pageStart = (Number(page) - 1) * Number(per_page);
+
+				const pageEnd = pageStart + Number(per_page);
+
+				const users = schema.all("purchases").models.slice(pageStart, pageEnd);
+
+				return new Response(200, { "x-total-count": String(total) }, users);
+			});
+
 			this.post("purchases", (schema, request) => {
 				const { value, buyed_at, code } = JSON.parse(request.requestBody);
 

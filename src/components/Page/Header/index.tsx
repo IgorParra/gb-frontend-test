@@ -1,10 +1,4 @@
-import {
-	Flex,
-	Icon,
-	IconButton,
-	useBreakpoint,
-	useBreakpointValue,
-} from "@chakra-ui/react";
+import { Flex, Icon, IconButton, useBreakpointValue } from "@chakra-ui/react";
 import { NotificationsNav } from "./NotificationsNav";
 import { Profile } from "./Profile";
 import { Searchbar } from "./Searchbar";

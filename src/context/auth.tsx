@@ -40,6 +40,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 				.get("me")
 				.then((response) => {
 					const { email, permissions, roles, name } = response.data;
+
 					setUser({ email, permissions, roles, name });
 				})
 				.catch(() => {

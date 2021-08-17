@@ -1,9 +1,9 @@
 import { useRouter } from "hooks/useRouter";
-import React, { cloneElement, ReactElement } from "react";
+import { ReactNode } from "react";
 import { Link, LinkProps } from "react-router-dom";
 
 interface ActiveLinkProps extends LinkProps {
-	children: ReactElement;
+	children: ReactNode;
 	shoulMatchExactHref?: boolean;
 }
 
@@ -24,8 +24,8 @@ export function ActiveLink({
 		isActive = true;
 	}
 	return (
-		<Link {...rest}>
-			{cloneElement(children, { color: isActive ? "orange" : "gray.500" })}
+		<Link {...rest} style={{ color: isActive ? "orange" : "gray.500" }}>
+			{children}
 		</Link>
 	);
 }
