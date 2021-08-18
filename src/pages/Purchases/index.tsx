@@ -18,42 +18,39 @@ import { AiOutlineReload } from "react-icons/ai";
 import { usePurchases } from "hooks/usePurchases";
 
 import { PurchasesTable } from "./PurchasesTable";
-import { PurchasesData } from "types";
+import { FormatedPurchasesData } from "types";
 
 export const Purchases = () => {
 	const [page, setPage] = useState(1);
 
 	const { data, isLoading, error, isFetching, refetch } = usePurchases(page);
 
-	const [purchases, setPurchases] = useState<PurchasesData[]>(
-		[] as PurchasesData[]
-	);
-
-	const amountOfCashback = purchases.reduce(
+	const amountOfCashback = data?.purchases.reduce(
 		(accumulator, purchase) =>
 			purchase.status === "Aprovado"
-				? accumulator + purchase.value
+				? accumulator + parseFloat(purchase.value.replace(/[R$,]+/g, ""))
 				: accumulator,
 		0
 	);
 
-	const amountOfCashbackWaitingValidation = purchases.reduce(
+	const amountOfCashbackWaitingValidation = data?.purchases.reduce(
 		(accumulator, purchase) =>
 			purchase.status === "Em validação"
-				? accumulator + purchase.value
+				? accumulator + parseFloat(purchase.value.replace(/[R$,]+/g, ""))
 				: accumulator,
 		0
 	);
 
-	const amountOfCashbackDenied = purchases.reduce(
+	const amountOfCashbackDenied = data?.purchases.reduce(
 		(accumulator, purchase) =>
 			purchase.status === "Reprovado"
-				? accumulator + purchase.value
+				? accumulator + parseFloat(purchase.value.replace(/[R$,]+/g, ""))
 				: accumulator,
 		0
 	);
 
-	useEffect(() => {}, []);
+	console.log(data?.purchases);
+
 	return (
 		<Page id="ClientsIndex">
 			<Box w="100%" p="8" flex="1">
@@ -64,18 +61,19 @@ export const Purchases = () => {
 					m="20px 0"
 				>
 					<Card title="Total cashback" bg="green.700" color="green.100">
-						{formatPrice(amountOfCashback)}
+						{amountOfCashback && formatPrice(amountOfCashback)}
 					</Card>
 					<Card
 						title="Valor total aguardando validação"
 						bg="yellow.500"
 						color="yellow.100"
 					>
-						{formatPrice(amountOfCashbackWaitingValidation)}
+						{amountOfCashbackWaitingValidation &&
+							formatPrice(amountOfCashbackWaitingValidation)}
 					</Card>
 
 					<Card title="Valor total recusado" bg="red.700" color="red.100">
-						{formatPrice(amountOfCashbackDenied)}
+						{amountOfCashbackDenied && formatPrice(amountOfCashbackDenied)}
 					</Card>
 				</SimpleGrid>
 

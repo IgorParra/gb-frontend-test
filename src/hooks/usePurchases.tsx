@@ -1,7 +1,7 @@
 import api from "services/api";
 import { useQuery } from "react-query";
 import { formatDate, formatPrice } from "util/format";
-import { GetUserReponse, PurchasesData } from "types";
+import { GetUserReponse, PurchasesData, FormatedPurchasesData } from "types";
 
 export async function getPurchases(page: number): Promise<GetUserReponse> {
 	const { data, headers } = await api.get("purchases", { params: { page } });
@@ -9,7 +9,7 @@ export async function getPurchases(page: number): Promise<GetUserReponse> {
 	const totalCount = Number(headers["x-total-count"]);
 
 	const purchases = data.map((purchase: PurchasesData) => {
-		return {
+		const formatedPurchaseData: FormatedPurchasesData = {
 			code: purchase.code,
 			buyed_at: formatDate(purchase.buyed_at),
 			value: formatPrice(purchase.value),
@@ -19,6 +19,7 @@ export async function getPurchases(page: number): Promise<GetUserReponse> {
 				2
 			)}%`,
 		};
+		return formatedPurchaseData;
 	});
 	return { purchases, totalCount };
 }

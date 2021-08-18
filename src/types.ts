@@ -55,8 +55,17 @@ export interface PurchasesData {
 	percentCashback: string;
 }
 
+export interface FormatedPurchasesData {
+	code: number;
+	value: string;
+	buyed_at: string;
+	cashback: string;
+	status: "Em validação" | "Reprovado" | "Aprovado";
+	percentCashback: string;
+}
+
 export interface PurchasesTableProps {
-	purchases: PurchasesData[] | undefined;
+	purchases: FormatedPurchasesData[] | undefined;
 	page: number;
 	setPage(page: number): void;
 	totalCountOfRegisters?: number | undefined;
@@ -127,18 +136,9 @@ export interface SidebarDrawerContextProps {
 
 export type SidebarDrawerContextData = UseDisclosureReturn;
 
-export interface PurchasesData {
-	code: number;
-	value: number;
-	buyed_at: number;
-	cashback: number;
-	status: "Em validação" | "Reprovado" | "Aprovado";
-	percentCashback: string;
-}
-
 export interface GetUserReponse {
 	totalCount: number;
-	purchases: PurchasesData[];
+	purchases: FormatedPurchasesData[];
 }
 
 export interface UserProps {
