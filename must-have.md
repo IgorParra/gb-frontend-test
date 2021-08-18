@@ -2,7 +2,7 @@
 
 <!-- # Tela de login para informar e-mail e senha; -->
 
-# Tela de cadastro de compras onde deverá ser informado o código, valor e data;
+<!-- # Tela de cadastro de compras onde deverá ser informado o código, valor e data;
 
 <!-- # Tela de listagem das compras cadastradas exibindo as informações de: código da compra, valor, data, % de cashback aplicado, valor do cashback e status do cadastro; -->
 
