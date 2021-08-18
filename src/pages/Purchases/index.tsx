@@ -11,14 +11,13 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { RiAddLine } from "react-icons/ri";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { formatPrice } from "util/format";
 import { Card } from "components/Card";
 import { AiOutlineReload } from "react-icons/ai";
 import { usePurchases } from "hooks/usePurchases";
 
 import { PurchasesTable } from "./PurchasesTable";
-import { FormatedPurchasesData } from "types";
 
 export const Purchases = () => {
 	const [page, setPage] = useState(1);
